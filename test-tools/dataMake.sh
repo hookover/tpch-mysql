@@ -28,7 +28,8 @@ echo "make tbl"
 DIR=`pwd`
 file=``
 for tbl in `ls *.tbl`; do
-    table=$(echo "${tbl%.*}" | tr '[:lower:]' '[:upper:]')
+#    table=$(echo "${tbl%.*}" | tr '[:lower:]' '[:upper:]')
+    table=$(echo "${tbl%.*}") #mysql 区别大小写
 	name=${table#$prefix}
 	file="$name.sql"
 	if [ ! -f "$file" ] ; then
