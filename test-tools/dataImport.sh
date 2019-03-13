@@ -10,6 +10,20 @@ target_db_user=`cat config.properties|grep "target_db_user"|cut -d"=" -f2`
 target_db_password=`cat config.properties|grep "target_db_password"|cut -d"=" -f2`
 target_db_name=`cat config.properties|grep "target_db_name"|cut -d"=" -f2`
 
+# 优化
+# https://mariadb.com/kb/en/library/how-to-quickly-insert-data-into-mariadb/
+
+# 命令行
+# SET @@session.unique_checks = 0;
+# SET @@session.foreign_key_checks = 0;
+
+# my.cnf
+# max_length_for_sort_data = 1024000
+#  secure_file_priv=/data
+#  innodb_autoinc_lock_mode=2
+#  wait_timeout=2880000
+#  interactive_timeout = 2880000
+#  max_allowed_packet=1024M
 
 # arg1=start, arg2=end, format: %s.%N
 function getTiming() {
