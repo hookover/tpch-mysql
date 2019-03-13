@@ -53,28 +53,21 @@ if [ -z $target_db_password ];
 then
   echo URL=$dbURL
 else
-  dbURL=$dbURL" -p$target_db_password"
+  dbURL=$dbURL" -p'$target_db_password'"
   echo URL=$dbURL
 fi
 
 
-i=0
 for tbl in `ls $LS_PATH_STRING`; do
-    let i=i+1
+    p1=$(echo ${tbl##*/})
+    table=$(echo ${p1%%.*})
     tbl_path=$(echo "$SQL_DATA/$tbl") #mysql 区别大小写
-    echo mysqlimport $dbURL  --fields-terminated-by="|" $target_db_name $tbl_path
-
-    let n=i%2
-
-    if [ $n -eq 0 ]; then
-        echo "$i 重启 mysqld"
-        sudo service mysqld restart
-    fi
-
-    #mysqlimport -h 127.0.0.1 -P 3306 -uroot -p'BzU!fg/pt7o5' tpch --fields-terminated-by="|"  /data/bigdata/tpch-mysql/test-tools/impdata/orders.xaa.tbl
+    #echo mysqlimport $dbURL  "--fields-terminated-by='|'" $target_db_name $tbl_path
+    echo "mysql $dbURL -e \"SET @@session.unique_checks = 0; set sql_log_bin=0; SET @@session.foreign_key_checks = 0; use tpch; LOAD DATA  INFILE '$tbl_path' INTO TABLE $table FIELDS TERMINATED BY '|';\""
 
     start=$(date +%s.%N)
-	mysqlimport $dbURL $target_db_name --fields-terminated-by='|' $tbl_path
+	mysql $dbURL -e "SET @@session.unique_checks = 0; set sql_log_bin=0; SET @@session.foreign_key_checks = 0; use tpch; LOAD DATA  INFILE '$tbl_path' INTO TABLE $table FIELDS TERMINATED BY '|';"
 	end=$(date +%s.%N)
 	echo $path `getTiming $start $end`
+
 done
