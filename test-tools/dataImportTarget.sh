@@ -5,7 +5,7 @@ GP_TPCH_HOME=`readlink -f .`
 SQL_DATA=$GP_TPCH_HOME
 
 if [ ! -n "$LS_PATH_STRING" ] ;then
-    echo "必须输入文件路径，如:data/*.tpl"
+    echo "必须输入文件目录路径，如:data/*.tpl"
     exit 1
 fi
 
