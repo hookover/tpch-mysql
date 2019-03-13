@@ -53,7 +53,7 @@ if [ -z $target_db_password ];
 then
   echo URL=$dbURL
 else
-  dbURL=$dbURL" -p'$target_db_password'"
+  dbURL=$dbURL" -p$target_db_password"
   echo URL=$dbURL
 fi
 
