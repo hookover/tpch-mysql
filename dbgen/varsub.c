@@ -41,7 +41,8 @@
 */
 #include <stdio.h>
 #ifndef _POSIX_SOURCE
-#include <malloc.h>
+//#include <malloc.h>
+#include <sys/malloc.h>
 #endif /* POSIX_SOURCE */
 #if (defined(_POSIX_)||!defined(WIN32))
 #include <unistd.h>
@@ -123,7 +124,7 @@ varsub(int qnum, int vnum, int flags)
     char *ptr;
     int i = 0;
     DSS_HUGE tmp_date, tmp1, tmp2;
-	
+
     if (!bInit)
     {
         sprintf(formats[4], "19%s-%s-01", HUGE_DATE_FORMAT, HUGE_DATE_FORMAT);
@@ -165,7 +166,7 @@ varsub(int qnum, int vnum, int flags)
 				pick_str(&c_mseg_set, qnum, param[1]);
 				/*
 				* pick a random offset within the month of march and add the
-				* appropriate magic numbers to position the output functions 
+				* appropriate magic numbers to position the output functions
 				* at the start of March '95
 				*/
             RANDOM(tmp_date, 0, 30, qnum);
@@ -187,7 +188,7 @@ varsub(int qnum, int vnum, int flags)
 			case 6:
 				tmp_date = UnifInt((DSS_HUGE)93,(DSS_HUGE)97,qnum);
 				sprintf(param[1], formats[6], tmp_date);
-				sprintf(param[2], formats[7], 
+				sprintf(param[2], formats[7],
                                     UnifInt((DSS_HUGE)2, (DSS_HUGE)9, qnum));
 				sprintf(param[3], HUGE_FORMAT, UnifInt((DSS_HUGE)24, (DSS_HUGE)25, qnum));
 				param[4][0] = '\0';
@@ -244,7 +245,7 @@ varsub(int qnum, int vnum, int flags)
 				param[2][0] = '\0';
 				break;
 			case 16:
-				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum); 
+				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				tmp2 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				sprintf(param[1], formats[16], tmp1, tmp2);
 				pick_str(&p_types_set, qnum, param[2]);
@@ -257,7 +258,7 @@ varsub(int qnum, int vnum, int flags)
 					sprintf(param[i], "%ld", sizes[i - 3]);
 				break;
 			case 17:
-				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum); 
+				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				tmp2 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				sprintf(param[1], formats[17], tmp1, tmp2);
 				pick_str(&p_cntr_set, qnum, param[2]);
@@ -268,13 +269,13 @@ varsub(int qnum, int vnum, int flags)
 				param[2][0] = '\0';
 				break;
 			case 19:
-				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum); 
+				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				tmp2 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				sprintf(param[1], formats[19], tmp1, tmp2);
-				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum); 
+				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				tmp2 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				sprintf(param[2], formats[19], tmp1, tmp2);
-				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum); 
+				tmp1 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				tmp2 = UnifInt((DSS_HUGE)1, (DSS_HUGE)5, qnum);
 				sprintf(param[3], formats[19], tmp1, tmp2);
 				sprintf(param[4], HUGE_FORMAT, UnifInt((DSS_HUGE)1, (DSS_HUGE)10, qnum));
@@ -304,13 +305,13 @@ varsub(int qnum, int vnum, int flags)
 			case 24:
                 break;
 			default:
-				fprintf(stderr, 
-					"No variable definitions available for query %d\n", 
+				fprintf(stderr,
+					"No variable definitions available for query %d\n",
                     qnum);
 				return;
         }
     }
-	
+
     if (flags & LOG)
 	{
         if (lfp == NULL)
@@ -339,7 +340,7 @@ varsub(int qnum, int vnum, int flags)
     }
     else
 	{
-        if (flags & DFLT)   
+        if (flags & DFLT)
 		{
             /* to allow -d to work at all scale factors */
             if (qnum == 11 && vnum == 2)
@@ -348,11 +349,11 @@ varsub(int qnum, int vnum, int flags)
                 if (defaults[qnum - 1][vnum - 1])
                     fprintf(ofp, "%s", defaults[qnum - 1][vnum - 1]);
                 else
-					fprintf(stderr, 
+					fprintf(stderr,
 					"Bad default request (q: %d, p: %d)\n",
 					qnum, vnum);
 		}
-        else        
+        else
 		{
             if (param[vnum] && vnum <= MAX_PARAM)
                 fprintf(ofp, "%s", param[vnum]);

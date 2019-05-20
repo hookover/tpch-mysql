@@ -10,3 +10,7 @@ gen
 .ipython
 .ipynb_checkpoints
 .jupyter
+*.o
+impdata
+dbgen/dbgen
+dbgen/qgen
