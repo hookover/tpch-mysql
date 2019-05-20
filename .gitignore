@@ -14,3 +14,4 @@ gen
 impdata
 dbgen/dbgen
 dbgen/qgen
+config.properties
