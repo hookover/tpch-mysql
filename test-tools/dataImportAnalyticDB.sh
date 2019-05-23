@@ -66,7 +66,7 @@ EOF
 
 # 创建表
 echo "crate tables"
-mysql $dbURL -D $target_db_name<$TEST_TOOLS_HOME/initdb/dss.sql
+mysql $dbURL -D $target_db_name<$TEST_TOOLS_HOME/initdb/dss_ali_analytic_db.sql
 
 # 导入数据
 echo "import datas"

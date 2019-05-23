@@ -60,12 +60,10 @@ for tbl in `ls $LS_PATH_STRING`; do
     table=$(echo ${p1%%.*})
     tbl_path=$(echo "$SQL_DATA/$tbl") #mysql 区别大小写
     #echo mysqlimport $dbURL  "--fields-terminated-by='|'" $target_db_name $tbl_path
-    echo "mysql $dbURL -e \"SET @@session.unique_checks = 0; set sql_log_bin=0; SET @@session.foreign_key_checks = 0; use tpch; LOAD DATA
-INFILE '$tbl_path' INTO TABLE $table FIELDS TERMINATED BY '|';\""
+    echo "mysql $dbURL -e \"SET @@session.unique_checks = 0; set sql_log_bin=0; SET @@session.foreign_key_checks = 0; use tpch; LOAD DATA INFILE '$tbl_path' INTO TABLE $table FIELDS TERMINATED BY '|';\""
 
     start=$(date +%s.%N)
-        mysql $dbURL -e "SET @@session.unique_checks = 0; set sql_log_bin=0; SET @@session.foreign_key_checks = 0; use tpch; LOAD DATA  INFF
-ILE '$tbl_path' INTO TABLE $table FIELDS TERMINATED BY '|';"
+        mysql $dbURL -e "SET @@session.unique_checks = 0; set sql_log_bin=0; SET @@session.foreign_key_checks = 0; use tpch; LOAD DATA  INFILE '$tbl_path' INTO TABLE $table FIELDS TERMINATED BY '|';"
         end=$(date +%s.%N)
         echo $path `getTiming $start $end`
 
